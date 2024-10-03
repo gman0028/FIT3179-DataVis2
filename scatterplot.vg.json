@@ -1,0 +1,134 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 1200,
+    "height": 600,
+    "title": "Nuclear Explosions: Maximum Yield against Year",
+    "data": {
+      "url": "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/nuclear_explosions_updated.csv"
+    },
+    "params": [
+      {
+        "name": "Country_selection",
+        "bind": {
+          "input": "select",
+          "options": [
+            null,
+            "USA",
+            "USSR",
+            "FRANCE",
+            "UK",
+            "CHINA",
+            "INDIA",
+            "PAKISTAN",
+            "NORTH KOREA"
+          ],
+          "labels": [
+            "Show All",
+            "USA",
+            "USSR",
+            "France",
+            "UK",
+            "China",
+            "India",
+            "Pakistan",
+            "North Korea"
+          ],
+          "name": "Country Selection: "
+        }
+      }
+    ],
+    "transform": [
+      {"filter": "datum['Yeild/Upper'] > 0"},
+      {"filter": "Country_selection == null || datum['Country'] == Country_selection"}
+    ],
+    "encoding": {
+      "x": {
+        "field": "Year",
+        "type": "quantitative",
+        "axis": {
+          "title": "Year",
+          "format": "d",
+          "tickMinStep": 1  
+        },
+        "scale": {"domain": [1940, 2020]}
+      },
+      "y": {
+        "field": "Yeild/Upper",
+        "type": "quantitative",
+        "title": "Maximum Yield",
+        "axis": {"tickCount": 6},
+        "scale": {"type": "log", "domain": [0.0001, 1000000]}
+      }
+    },
+    "layer": [
+      {
+        "mark": "circle",
+        "encoding": {
+          "color": {
+            "field": "Country",
+            "type": "nominal",
+            "scale": {
+              "domain": [
+                "USA",
+                "USSR",
+                "FRANCE",
+                "UK",
+                "CHINA",
+                "INDIA",
+                "PAKISTAN",
+                "NORTH KOREA"
+              ],
+              "range": [
+                "#e41a1c",
+                "#984ea3",
+                "#ff7f00",
+                "#a6cee3",
+                "#377eb8",
+                "#a65628",
+                "#97d8c4",
+                "#cc7987"
+              ]
+            },
+            "legend": {"title": "Country"}
+          },
+          "size": {
+            "value": 80 
+          },
+          "tooltip": [
+            {"field": "Country", "type": "nominal"},
+            {"field": "Yeild/Upper", "type": "quantitative", "format": ",", "title": "Maximum Yield"},
+            {"field": "Year", "type": "quantitative", "format": "d"}
+          ]
+        }
+      },
+      {
+        "mark": {
+          "type": "text",
+          "align": "right",
+          "baseline": "middle",
+          "dx": -12,
+          "fontSize": 12,
+          "fontStyle": "italic"
+        },
+        "encoding": {
+          "x": {"field": "Year", "type": "quantitative"},
+          "y": {"field": "Yeild/Upper", "type": "quantitative"},
+          "text": {"field": "Name", "type": "nominal"},
+          "color": {"value": "black"},
+          "opacity": {
+            "condition": {
+              "test": "datum['Name'] == 'Trinity' || datum['Name'] == 'Littleboy' || datum['Name'] == 'Pamuk' || datum['Name'] == 'Castor' || datum['Name'] == 'Handley' || datum['Name'] == 'Grapple Y' || datum['Name'] == 'Shakti 1-1' || datum['Name'] == 'Chagai 1-1'",
+              "value": 1
+            },
+            "value": 0
+          },
+          "tooltip": [
+            {"field": "Country", "type": "nominal"},
+            {"field": "Yeild/Upper", "type": "quantitative", "format": ",", "title": "Maximum Yield"},
+            {"field": "Year", "type": "quantitative", "format": "d"}
+          ]
+        }
+      }
+    ]
+  }
+  
