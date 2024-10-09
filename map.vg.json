@@ -1,44 +1,97 @@
 {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "width": 800,
-    "height": 450,
-    "title": "Locations of Nuclear Explosions",
-    "projection": {"type": "equalEarth"},
-    "layer": [
-      {
-        "data": {
-          "url": "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/ne_110m_ocean.topojson",
-          "format": {"type": "topojson", "feature": "ne_110m_ocean"}
-        },
-        "mark": {"type": "geoshape", "fill": "lightblue", "stroke": null}
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 1000,
+  "height": 500,
+  "title": "Locations of Nuclear Explosions",
+  "projection": {"type": "equalEarth"},
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/ne_110m_ocean.topojson",
+        "format": {"type": "topojson", "feature": "ne_110m_ocean"}
       },
-      {
-        "data": {
-          "url": "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/ne_110m_admin_0_countries.topojson",
-          "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}  
-        },
-        "mark": {"type": "geoshape", "fill": "lightyellow", "stroke": "darkgray", "strokeWidth": 0.7}
+      "mark": {"type": "geoshape", "fill": "lightblue", "stroke": null}
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/ne_110m_admin_0_countries.topojson",
+        "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
       },
-      {
-        "data": {
-          "url": "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/ne_110m_graticules_30.topojson",
-          "format": {"type": "topojson", "feature": "ne_110m_graticules_30"}
-        },
-        "mark": {"type": "geoshape", "fill": null, "stroke": "gray", "strokeWidth": 0.5}
+      "mark": {"type": "geoshape", "fill": "lightyellow", "stroke": "darkgray", "strokeWidth": 0.7}
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/ne_110m_graticules_30.topojson",
+        "format": {"type": "topojson", "feature": "ne_110m_graticules_30"}
       },
-      {
-        "data": {
-          "url": "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/nuclear_explosions_updated.csv",
-          "format": {"type": "csv"}  
+      "mark": {"type": "geoshape", "fill": null, "stroke": "gray", "strokeWidth": 0.5}
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/nuclear_explosions_updated.csv",
+        "format": {"type": "csv"}
+      },
+      "mark": {
+        "type": "circle",
+        "stroke": "black",  
+        "strokeWidth": 0.8,
+        "tooltip": {"content": "data"}
+      },
+      "encoding": {
+        "longitude": {"field": "Longitude", "type": "quantitative"},
+        "latitude": {"field": "Latitude", "type": "quantitative"},
+        "size": {
+          "field": "Magnitude/Body",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 10],  
+            "range": [50, 500]  
+          },
+          "title": "Magnitude (Body)"
         },
-        "mark": {"type": "circle", "tooltip": {"content": "data"}},
-        "encoding": {
-          "longitude": {"field": "Longitude", "type": "quantitative"},
-          "latitude": {"field": "Latitude", "type": "quantitative"},
-          "size": {"value": 50},  
-          "color": {"value": "red"} 
-        }
+        "color": {
+          "field": "Country", 
+          "type": "nominal",
+          "legend": {"title": "Country"},
+          "scale": {
+            "domain": [
+              "USA",
+              "USSR",
+              "FRANCE",
+              "UK",
+              "CHINA",
+              "INDIA",
+              "PAKISTAN",
+              "NORTH KOREA"
+            ],
+            "range": [
+              "#e41a1c",  
+              "#984ea3",  
+              "#ff7f00",  
+              "#a6cee3",  
+              "#377eb8",  
+              "#a65628",  
+              "#97d8c4",  
+              "#cc7987"   
+            ]
+          }
+        },
+        "tooltip": [
+          {"field": "Country", "type": "nominal", "title": "Country"},
+          {"field": "Region", "type": "nominal", "title": "Region"},
+          {"field": "Latitude", "type": "quantitative", "title": "Latitude"},
+          {"field": "Longitude", "type": "quantitative", "title": "Longitude"},
+          {"field": "Depth", "type": "quantitative", "title": "Depth"},
+          {"field": "Magnitude/Body", "type": "quantitative", "title": "Magnitude (Body)"},
+          {"field": "Magnitude/Surface", "type": "quantitative", "title": "Magnitude (Surface)"},
+          {"field": "Yeild/Lower", "type": "quantitative", "title": "Yield (Lower)"},
+          {"field": "Yeild/Upper", "type": "quantitative", "title": "Yield (Upper)"},
+          {"field": "Purpose", "type": "nominal", "title": "Purpose"},
+          {"field": "Name", "type": "nominal", "title": "Name"},
+          {"field": "Type", "type": "nominal", "title": "Type"},
+          {"field": "Year", "type": "quantitative", "title": "Year"}
+        ]
       }
-    ]
-  }
-  
+    }
+  ]
+}
