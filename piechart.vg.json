@@ -6,7 +6,7 @@
     "type": "fit",
     "contains": "padding"
   },
-  "padding": {"left": 30, "right": 30, "top": 10, "bottom": 10},
+  "padding": {"left": 40, "right": 40, "top": 40, "bottom": 40},
     "title": "Proportion of Nuclear Explosions by Method of Deployment",
     "data": {
       "url": "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/nuclear_explosions_updated.csv"
