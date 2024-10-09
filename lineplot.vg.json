@@ -1,0 +1,84 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 1200,
+    "height": 600,
+    "title": "Count of Nuclear Explosions Over Time",
+    "data": {
+      "url": "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/nuclear_explosions_updated.csv"
+    },
+    "params": [
+      {
+        "name": "Country_selection",
+        "bind": {
+          "input": "select",
+          "options": [
+            null,
+            "USA",
+            "USSR",
+            "FRANCE",
+            "UK",
+            "CHINA",
+            "INDIA",
+            "PAKISTAN",
+            "NORTH KOREA"
+          ],
+          "labels": [
+            "Total",
+            "USA",
+            "USSR",
+            "France",
+            "UK",
+            "China",
+            "India",
+            "Pakistan",
+            "North Korea"
+          ],
+          "name": "Selection: "
+        }
+      }
+    ],
+    "transform": [
+      {
+        "filter": "Country_selection == null || datum['Country'] == Country_selection"
+      },
+      {
+        "aggregate": [
+          {
+            "op": "count",
+            "as": "Explosion Count"
+          }
+        ],
+        "groupby": ["Year"]
+      }
+    ],
+    "encoding": {
+      "x": {
+        "field": "Year",
+        "type": "quantitative",
+        "axis": {
+          "title": "Year",
+          "format": "d",
+          "tickMinStep": 1
+        },
+        "scale": {"domain": [1940, 2020]}
+      },
+      "y": {
+        "field": "Explosion Count",
+        "type": "quantitative",
+        "title": "Count of Explosions"
+      },
+      "tooltip": [
+        {"field": "Year", "type": "quantitative", "title": "Year"},
+        {"field": "Explosion Count", "type": "quantitative", "title": "Number of Explosions"}
+      ]
+    },
+    "mark": {
+      "type": "line",
+      "color": "red",
+      "point": {
+        "filled": true,
+        "fill": "red"
+      }
+    }
+  }
+  
