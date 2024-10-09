@@ -1,0 +1,88 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 1200,
+    "height": 1000,
+    "title": "Nuclear Explosions by Method of Deployment",
+    "data": {
+      "url": "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/nuclear_explosions_updated.csv"
+    },
+    "params": [
+      {
+        "name": "Country_selection",
+        "bind": {
+          "input": "select",
+          "options": [
+            null,
+            "USA",
+            "USSR",
+            "FRANCE",
+            "UK",
+            "CHINA",
+            "INDIA",
+            "PAKISTAN",
+            "NORTH KOREA"
+          ],
+          "labels": [
+            "Total",
+            "USA",
+            "USSR",
+            "France",
+            "UK",
+            "China",
+            "India",
+            "Pakistan",
+            "North Korea"
+          ],
+          "name": "Country Selection: "
+        }
+      }
+    ],
+    "transform": [
+      {
+        "filter": "Country_selection == null || datum['Country'] == Country_selection"
+      },
+      {
+        "aggregate": [{"op": "count", "as": "Explosion Count"}],
+        "groupby": ["Type", "Country"]
+      },
+      {
+        "joinaggregate": [{
+          "op": "sum",
+          "field": "Explosion Count",
+          "as": "TotalExplosions"
+        }],
+        "groupby": ["Country"]
+      },
+      {
+        "calculate": "datum['Explosion Count'] / datum['TotalExplosions']",
+        "as": "ProportionWithinGroup"
+      }
+    ],
+    "encoding": {
+      "x": {
+        "field": "Type",
+        "type": "nominal",
+        "axis": {"title": "Method of Deployment"},
+        "sort": "-y"
+      },
+      "y": {
+        "aggregate": "sum",
+        "field": "ProportionWithinGroup",
+        "type": "quantitative",
+        "axis": {"title": "Proportion of Explosions"},
+        "stack": "normalize"
+      },
+      "color": {
+        "field": "Type",
+        "type": "nominal",
+        "legend": {"title": "Method of Deployment"}
+      },
+      "tooltip": [
+        {"field": "Type", "type": "nominal", "title": "Method of Deployment"},
+        {"field": "Explosion Count", "type": "quantitative", "title": "Count of Explosions"},
+        {"field": "ProportionWithinGroup", "type": "quantitative", "format": ".1%", "title": "Proportion of Explosions"}
+      ]
+    },
+    "mark": "bar"
+  }
+  
