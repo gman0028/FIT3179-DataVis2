@@ -1,6 +1,6 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "width": 1200,
+    "width": 800,
     "height": 500,
     "title": "Count of Nuclear Explosions Over Time",
     "data": {
