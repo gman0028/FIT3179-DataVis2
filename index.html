@@ -1,39 +1,159 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuclear Explosions Throughout History</title>
+
+  <!-- Import Vega & Vega-Lite -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
-  
-  
-  <!-- CSS file -->
-  <link rel="stylesheet" type="text/css" href="https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/styles.css" media="all">
-  
+
+  <!-- CSS for layout and alignment -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 30px;
+    }
+
+    .chart-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 40px;
+      width: 100%;
+    }
+
+    .chart-container.left-aligned {
+      align-items: flex-start;
+      max-width: 1200px;
+    }
+
+    .description-box {
+      margin-top: 10px;
+      padding: 15px;
+      background-color: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 100%;
+      max-width: 1000px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .description-box.center-text {
+      text-align: center;
+    }
+
+    .side-by-side-container {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1600px;
+      margin: 0 auto;
+      gap: 30px; /* Add some gap between the charts */
+    }
+
+    .side-by-side-container .chart-item {
+      width: 48%; /* 48% to balance both charts and prevent overlap */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Add extra margin below the line plot's description to create space */
+    .extra-margin {
+      margin-bottom: 60px; /* Adjust this value as needed */
+    }
+
+    @media screen and (max-width: 1200px) {
+      .side-by-side-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .side-by-side-container .chart-item {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  
-<div id="symbol_map"></div>
 
-<script type="text/javascript">
+  <h1>Nuclear Explosions Throughout History</h1>
 
-  var spec2 = "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/map.vg.json";
-  vegaEmbed('#symbol_map', spec2).then(function(result) {
-    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
-  }).catch(console.error);
-</script>
+  <!-- Symbol Map (center aligned) -->
+  <div class="chart-container">
+    <div id="symbol_map"></div>
+    <div class="description-box">
+      <p>The magnitude is a measurement of the energy released by the explosion, similar to how the Richter scale measures the energy of an earthquake. 
+        In nuclear test monitoring, the body wave magnitude helps scientists understand the size and impact of the explosion by measuring how the shockwaves travel through the Earth's interior.</p>
+    </div>
+  </div>
 
-<div id="scatter_plot"></div>
+  <!-- Line Plot and Pie Chart Side-by-Side with Separate Text Boxes -->
+  <div class="side-by-side-container">
+    <div class="chart-item">
+      <div id="line_plot"></div>
+      <div class="description-box extra-margin">
+        <p>The first nuclear explosion took place on July 16, 1945, during World War II. In the following decades, nuclear testing surged, particularly at the peak of the Cold War, leading to the creation of multiple treaties designed to curb these tests. Despite these efforts, some nations have resisted full compliance, continuing to pursue nuclear testing in defiance of international agreements. Fortunately, no nuclear tests have been conducted in the past seven years, marking a significant period of restraint.</p>
+      </div>
+    </div>
 
-<script type="text/javascript">
+    <div class="chart-item">
+      <div id="pie_chart"></div>
+      <div class="description-box">
+        <p>ATMOSPH (Atmospheric), UG (underground), BALLOON (Balloon drop), AIRDROP (Airplane deployed), ROCKET (Rocket deployed), TOWER (deployed at the top of a constructed tower), WATERSURFACE (on surface of a body of water), BARGE (on a barge boat), SURFACE (on surface or in a shallow crater), UW (Underwater), SHAFT (Vertical Shaft underground), TUNNEL/GALLERY (Horizontal tunnel)</p>
+      </div>
+    </div>
+  </div>
 
-  var spec3 = "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/scatterplot.vg.json"
-  vegaEmbed('#scatter_plot', spec3).then(function(result) {
-    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
-  }).catch(console.error);
-</script>
+  <!-- Stacked Bar Chart (left-aligned, text box centered) -->
+  <div class="chart-container">
+    <div id="stacked_bar_chart"></div>
+    <div class="description-box center-text">
+      <p> COMBAT (WWII bombs dropped over Japan), FMS (Soviet test, study phenomenon of nuclear explosion), ME (Military Exercise), PNE (Peaceful nuclear explosion), SAM (Soviet test, accidental mode/emergency), SSE (French/US tests - testing safety of nuclear weapons in case of accident), TRANSP (Transportation-storage purposes), WE (British, French, US, evaluate effects of nuclear detonation on various targets), WR (Weapons development program)</p>
+    </div>
+  </div>
+
+  <!-- Scatter Plot (left-aligned, text box centered) -->
+  <div class="chart-container">
+    <div id="scatter_plot"></div>
+    <div class="description-box center-text">
+      <p>Maximum yield refers to the highest amount of energy released during a nuclear explosion, typically measured in kilotons (kt) or megatons (Mt) of TNT equivalent. It indicates the explosive power of the nuclear device, where a higher yield means a more powerful explosion.</p>
+    </div>
+  </div>
+
+  <!-- JavaScript to embed the visualizations -->
+  <script type="text/javascript">
+    vegaEmbed('#symbol_map', "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/map.vg.json").then(function(result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#line_plot', "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/lineplot.vg.json").then(function(result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#pie_chart', "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/piechart.vg.json").then(function(result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#stacked_bar_chart', "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/stackedbarchart.vg.json").then(function(result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#scatter_plot', "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/scatterplot.vg.json").then(function(result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+  </script>
 
 </body>
-
-
 </html>
