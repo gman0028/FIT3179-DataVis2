@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 1500,
+  "width": 1300,
   "height": 600,
   "title": "Nuclear Explosions by Purpose",
   "data": {
