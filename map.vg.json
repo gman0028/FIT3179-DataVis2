@@ -7,28 +7,28 @@
   "layer": [
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/ne_110m_ocean.topojson",
+        "url": "https://raw.githubusercontent.com/gman0028/FIT3179-DataVis2/refs/heads/main/ne_110m_ocean.topojson",
         "format": {"type": "topojson", "feature": "ne_110m_ocean"}
       },
       "mark": {"type": "geoshape", "fill": "lightblue", "stroke": null}
     },
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/ne_110m_admin_0_countries.topojson",
+        "url": "https://raw.githubusercontent.com/gman0028/FIT3179-DataVis2/refs/heads/main/ne_110m_admin_0_countries.topojson",
         "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
       },
       "mark": {"type": "geoshape", "fill": "lightyellow", "stroke": "darkgray", "strokeWidth": 0.7}
     },
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/ne_110m_graticules_30.topojson",
+        "url": "https://raw.githubusercontent.com/gman0028/FIT3179-DataVis2/refs/heads/main/ne_110m_graticules_30.topojson",
         "format": {"type": "topojson", "feature": "ne_110m_graticules_30"}
       },
       "mark": {"type": "geoshape", "fill": null, "stroke": "gray", "strokeWidth": 0.5}
     },
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/nuclear_explosions_updated.csv",
+        "url": "https://raw.githubusercontent.com/gman0028/FIT3179-DataVis2/refs/heads/main/nuclear_explosions_updated.csv",
         "format": {"type": "csv"}
       },
       "mark": {
