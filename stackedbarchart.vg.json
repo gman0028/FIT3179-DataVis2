@@ -1,0 +1,50 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 1000,
+    "height": 1800,
+    "title": "Nuclear Explosions by Purpose",
+    "data": {
+      "url": "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/nuclear_explosions_updated.csv"
+    },
+    "transform": [
+      {"filter": "datum['Purpose'] != null"}
+    ],
+    "encoding": {
+      "x": {
+        "field": "Country",
+        "type": "nominal",
+        "title": "Country",
+        "axis": {"labelAngle": 0}
+      },
+      "y": {
+        "aggregate": "count",
+        "title": "Count of Nuclear Explosions"
+      },
+      "color": {
+        "field": "Purpose",
+        "type": "nominal",
+        "title": "Purpose of Explosion",
+        "legend": {"title": "Purpose"},
+        "scale": {
+          "range": [
+            "#E69F00",  
+            "#56B4E9",  
+            "#0072B2",  
+            "#F0E442",  
+            "#CC79A7",  
+            "#999999"   
+          ]
+        }
+      },
+      "tooltip": [
+        {"field": "Country", "type": "nominal", "title": "Country"},
+        {"field": "Purpose", "type": "nominal", "title": "Purpose"},
+        {"aggregate": "count", "title": "Number of Explosions"}
+      ]
+    },
+    "mark": {
+      "type": "bar",
+      "size": 80
+    }
+  }
+  
