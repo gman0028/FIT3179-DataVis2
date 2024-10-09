@@ -1,50 +1,67 @@
 {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "width": 1000,
-    "height": 1800,
-    "title": "Nuclear Explosions by Purpose",
-    "data": {
-      "url": "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/nuclear_explosions_updated.csv"
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 1000,
+  "height": 800,
+  "title": "Nuclear Explosions by Purpose",
+  "data": {
+    "url": "https://raw.githubusercontent.com/gman0028/FIT3179-Homework-Week9/refs/heads/main/nuclear_explosions_updated.csv"
+  },
+  "transform": [
+    {"filter": "datum['Purpose'] != null"}
+  ],
+  "encoding": {
+    "x": {
+      "field": "Country",
+      "type": "nominal",
+      "title": "Country",
+      "axis": {"labelAngle": 0}
     },
-    "transform": [
-      {"filter": "datum['Purpose'] != null"}
-    ],
-    "encoding": {
-      "x": {
-        "field": "Country",
-        "type": "nominal",
-        "title": "Country",
-        "axis": {"labelAngle": 0}
-      },
-      "y": {
-        "aggregate": "count",
-        "title": "Count of Nuclear Explosions"
-      },
-      "color": {
-        "field": "Purpose",
-        "type": "nominal",
-        "title": "Purpose of Explosion",
-        "legend": {"title": "Purpose"},
-        "scale": {
-          "range": [
-            "#E69F00",  
-            "#56B4E9",  
-            "#0072B2",  
-            "#F0E442",  
-            "#CC79A7",  
-            "#999999"   
-          ]
-        }
-      },
-      "tooltip": [
-        {"field": "Country", "type": "nominal", "title": "Country"},
-        {"field": "Purpose", "type": "nominal", "title": "Purpose"},
-        {"aggregate": "count", "title": "Number of Explosions"}
-      ]
+    "y": {
+      "aggregate": "count",
+      "title": "Count of Nuclear Explosions"
     },
-    "mark": {
-      "type": "bar",
-      "size": 80
-    }
+    "color": {
+      "field": "Purpose",
+      "type": "nominal",
+      "title": "Purpose of Explosion",
+      "legend": {"title": "Purpose"},
+      "scale": {
+        "range": [
+          "#8da0cb",  
+          "#66c2a5",  
+          "#fc8d62",  
+          "#e78ac3",  
+          "#a6d854",  
+          "#ffd92f",  
+          "#e5c494",  
+          "#c7eae5",  
+          "#fdbf6f",  
+          "#b3b3b3",  
+          "#80b1d3",  
+          "#bebada",  
+          "#fb8072",  
+          "#fdb462",  
+          "#b3de69",  
+          "#d9d9d9",
+          "#e41a1c",  
+          "#984ea3",  
+          "#ff7f00",  
+          "#a6cee3",  
+          "#377eb8",  
+          "#a65628",  
+          "#97d8c4",  
+          "#cc7987"    
+        ]
+      }
+    },
+    "tooltip": [
+      {"field": "Country", "type": "nominal", "title": "Country"},
+      {"field": "Purpose", "type": "nominal", "title": "Purpose"},
+      {"aggregate": "count", "title": "Number of Explosions"}
+    ]
+  },
+  "mark": {
+    "type": "bar",
+    "size": 80
   }
-  
+}
