@@ -105,6 +105,6 @@
     },
     "mark": {
       "type": "arc",
-      "outerRadius": 300
+      "outerRadius": 500
     }
   } 
