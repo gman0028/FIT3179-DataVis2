@@ -52,20 +52,10 @@
     .description-box.center-text {
       text-align: center;
     }
-    
+
     /* Add extra margin below the line plot's description to create space */
     .extra-margin {
       margin-bottom: 60px; /* Adjust this value as needed */
-    }
-
-    @media screen and (max-width: 1200px) {
-      .side-by-side-container {
-        flex-direction: column;
-        align-items: center;
-      }
-      .side-by-side-container .chart-item {
-        width: 100%;
-      }
     }
 
     /* Styles for the centered image and text container */
@@ -101,7 +91,7 @@
     </div>
   </div>
 
-  <!-- Line Plot and Pie Chart Side-by-Side with Separate Text Boxes -->
+  <!-- Line Plot -->
   <div class="chart-container">
     <div id="line_plot"></div>
     <div class="description-box extra-margin">
@@ -109,13 +99,13 @@
     </div>
   </div>
 
+  <!-- Pie Chart -->
   <div class="chart-container">
     <div id="pie_chart"></div>
     <div class="description-box">
       <p>ATMOSPH (Atmospheric), UG (underground), BALLOON (Balloon drop), AIRDROP (Airplane deployed), ROCKET (Rocket deployed), TOWER (deployed at the top of a constructed tower), WATERSURFACE (on surface of a body of water), BARGE (on a barge boat), SURFACE (on surface or in a shallow crater), UW (Underwater), SHAFT (Vertical Shaft underground), TUNNEL/GALLERY (Horizontal tunnel)</p>
     </div>
   </div>
-</div>
 
   <!-- Stacked Bar Chart (left-aligned, text box centered) -->
   <div class="chart-container">
