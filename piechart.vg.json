@@ -1,110 +1,111 @@
 {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "background": "#f0f4f8",
-    "width": 600,
-    "height": 600,
-    "data": {
-      "url": "https://raw.githubusercontent.com/gman0028/FIT3179-DataVis2/refs/heads/main/nuclear_explosions_updated.csv"
-    },
-    "params": [
-      {
-        "name": "Country_selection",
-        "bind": {
-          "input": "select",
-          "options": [
-            null,
-            "USA",
-            "USSR",
-            "FRANCE",
-            "UK",
-            "CHINA",
-            "INDIA",
-            "PAKISTAN",
-            "NORTH KOREA"
-          ],
-          "labels": [
-            "All",
-            "USA",
-            "USSR",
-            "France",
-            "UK",
-            "China",
-            "India",
-            "Pakistan",
-            "North Korea"
-          ],
-          "name": "Country Selection: "
-        }
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "#f0f4f8",
+  "width": 600,
+  "height": 600,
+  "data": {
+    "url": "https://raw.githubusercontent.com/gman0028/FIT3179-DataVis2/refs/heads/main/nuclear_explosions_updated.csv"
+  },
+  "params": [
+    {
+      "name": "Country_selection",
+      "bind": {
+        "input": "select",
+        "options": [
+          null,
+          "USA",
+          "USSR",
+          "FRANCE",
+          "UK",
+          "CHINA",
+          "INDIA",
+          "PAKISTAN",
+          "NORTH KOREA"
+        ],
+        "labels": [
+          "All",
+          "USA",
+          "USSR",
+          "France",
+          "UK",
+          "China",
+          "India",
+          "Pakistan",
+          "North Korea"
+        ],
+        "name": "Country Selection: "
       }
-    ],
-    "transform": [
-      {
-        "filter": "Country_selection == null || datum['Country'] == Country_selection"
-      },
-      {
-        "aggregate": [{"op": "count", "as": "Explosion Count"}],
-        "groupby": ["Type"]
-      },
-      {
-        "joinaggregate": [{
+    }
+  ],
+  "transform": [
+    {
+      "filter": "Country_selection == null || datum['Country'] == Country_selection"
+    },
+    {
+      "aggregate": [{"op": "count", "as": "Explosion Count"}],
+      "groupby": ["Type"]
+    },
+    {
+      "joinaggregate": [
+        {
           "op": "sum",
           "field": "Explosion Count",
           "as": "TotalExplosions"
-        }],
-        "groupby": []
-      },
-      {
-        "calculate": "datum['Explosion Count'] / datum['TotalExplosions']",
-        "as": "Proportion"
-      }
-    ],
-    "encoding": {
-      "theta": {
-        "field": "Proportion",
-        "type": "quantitative",
-        "stack": true
-      },
-      "color": {
-        "field": "Type",
-        "type": "nominal",
-        "title": "Method of Deployment",
-        "scale": {
-          "range": [
-            '#8da0cb',
-            '#66c2a5',
-            '#fc8d62',
-            '#e78ac3',
-            '#a6d854',
-            '#ffd92f',
-            '#e5c494',
-            '#c7eae5',
-            '#fdbf6f',
-            '#b3b3b3',
-            '#80b1d3',
-            '#bebada',
-            '#d3d3d3',  
-            '#fdb462',
-            '#b3de69',
-            '#d9d9d9',
-            '#7f7f7f',  
-            '#984ea3',
-            '#ff7f00',
-            '#a6cee3',
-            '#377eb8',
-            '#a65628',
-            '#97d8c4',
-            '#b0b0b0'  
-          ]
         }
-      },
-      "tooltip": [
-        {"field": "Type", "type": "nominal", "title": "Method of Deployment"},
-        {"field": "Explosion Count", "type": "quantitative", "title": "Count of Explosions"},
-        {"field": "Proportion", "type": "quantitative", "format": ".1%", "title": "Proportion of Explosions"}
       ]
     },
-    "mark": {
-      "type": "arc",
-      "outerRadius": 300
+    {
+      "calculate": "datum['TotalExplosions'] > 0 ? datum['Explosion Count'] / datum['TotalExplosions'] : 0",
+      "as": "Proportion"
     }
-  } 
+  ],
+  "encoding": {
+    "theta": {
+      "field": "Proportion",
+      "type": "quantitative",
+      "stack": true
+    },
+    "color": {
+      "field": "Type",
+      "type": "nominal",
+      "title": "Method of Deployment",
+      "scale": {
+        "range": [
+          "#8da0cb",
+          "#66c2a5",
+          "#fc8d62",
+          "#e78ac3",
+          "#a6d854",
+          "#ffd92f",
+          "#e5c494",
+          "#c7eae5",
+          "#fdbf6f",
+          "#b3b3b3",
+          "#80b1d3",
+          "#bebada",
+          "#d3d3d3",
+          "#fdb462",
+          "#b3de69",
+          "#d9d9d9",
+          "#7f7f7f",
+          "#984ea3",
+          "#ff7f00",
+          "#a6cee3",
+          "#377eb8",
+          "#a65628",
+          "#97d8c4",
+          "#b0b0b0"
+        ]
+      }
+    },
+    "tooltip": [
+      {"field": "Type", "type": "nominal", "title": "Method of Deployment"},
+      {"field": "Explosion Count", "type": "quantitative", "title": "Count of Explosions"},
+      {"field": "Proportion", "type": "quantitative", "format": ".1%", "title": "Proportion of Explosions"}
+    ]
+  },
+  "mark": {
+    "type": "arc",
+    "outerRadius": 300
+  }
+}
