@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,19 +11,33 @@
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
 
+  <!-- Import Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
   <!-- CSS for layout and alignment -->
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Roboto', sans-serif;
       margin: 0;
       padding: 20px;
-      background-color: #f4f4f4;
+      background-color: #f0f4f8;
+      color: #333;
+      line-height: 1.6;
     }
 
     h1 {
       text-align: center;
-      font-size: 2em;
+      font-size: 2.5em;
       margin-bottom: 30px;
+      color: #333a4d;
+      letter-spacing: 1px;
+    }
+
+    .chart-title {
+      font-size: 1.75em;
+      margin-bottom: 15px;
+      text-align: center;
+      color: #3a3d4e;
     }
 
     .chart-container {
@@ -31,42 +46,59 @@
       align-items: center;
       margin-bottom: 40px;
       width: 100%;
-    }
-
-    .chart-container.left-aligned {
-      align-items: flex-start;
-      max-width: 1200px;
+      border: none; 
+      box-shadow: none; 
     }
 
     .description-box {
       margin-top: 10px;
       padding: 15px;
       background-color: #ffffff;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
       width: 100%;
-      max-width: 1000px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .description-box.center-text {
+      max-width: 800px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
       text-align: center;
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    /* Add extra margin below the line plot's description to create space */
+    .pie-chart-description-box {
+      text-align: left;
+      padding: 15px;
+      max-width: 500px;
+      background-color: #f8f9fb;
+      border-radius: 8px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    ul li {
+      padding: 8px 0;
+      font-weight: 400;
+    }
+
     .extra-margin {
-      margin-bottom: 60px; /* Adjust this value as needed */
+      margin-bottom: 60px;
     }
 
-    /* Styles for the centered image and text container */
+    /* Image Styles */
     .image-container {
       text-align: center;
       margin-top: 40px;
     }
 
     .image-container img {
-      width: 300px; /* Adjust the width of the image */
+      max-width: 500px;
       height: auto;
+      border-radius: 8px;
     }
 
     .image-container .description-box {
@@ -75,6 +107,32 @@
       margin-left: auto;
       margin-right: auto;
     }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2em;
+      }
+
+      .description-box,
+      .pie-chart-description-box {
+        max-width: 100%;
+      }
+
+      .image-container img {
+        width: 100%;
+      }
+    }
+
+    /* Footer Style */
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background-color: #f0f4f8;
+      font-size: 0.9em;
+      color: #555;
+    }
   </style>
 </head>
 
@@ -82,77 +140,119 @@
 
   <h1>Nuclear Explosions Throughout History</h1>
 
-  <!-- Symbol Map (center aligned) -->
+  <!-- Centered Image and Text -->
+  <div class="image-container">
+    <figure>
+      <img src="https://raw.githubusercontent.com/gman0028/FIT3179-DataVis2/refs/heads/main/21trinity-fallout-promo-mediumSquareAt3X.jpg" alt="Trinity Test Image">
+      <figcaption>Trinity, the explosion that altered the course of history...</figcaption>
+    </figure>  
+    </div>
+  </div>
+
+  <!-- Intro Text Block -->
+  <div class="description-box center-text">
+    <p>
+      Nuclear explosions are among the most destructive forces known to humanity, unleashing immense energy that results in <b>widespread devastation, radiation, and long-lasting environmental and health impacts</b>. These powerful detonations can <b>obliterate entire cities, leaving behind shockwaves, intense heat, and radioactive fallout</b>. Over the decades, nuclear testing has shaped global politics, military strategies, and international relations, while raising concerns about environmental damage and human safety.
+    </p>
+  </div>
+
+  <!-- Symbol Map -->
   <div class="chart-container">
+    <h2 class="chart-title">Locations of Nuclear Explosions</h2>
     <div id="symbol_map"></div>
-    <div class="description-box">
-      <p>The magnitude is a measurement of the energy released by the explosion, similar to how the Richter scale measures the energy of an earthquake. 
-        In nuclear test monitoring, the body wave magnitude helps scientists understand the size and impact of the explosion by measuring how the shockwaves travel through the Earth's interior.</p>
+    <div class="description-box center-text">
+      <p>The <strong>magnitude</strong> measures the energy released by the explosion, similar to how the Richter scale measures the energy of an earthquake. 
+        In nuclear test monitoring, the body wave magnitude helps scientists understand <strong>the size and impact of the explosion</strong> by measuring how shockwaves travel through the Earth's interior.</p>
     </div>
   </div>
 
   <!-- Line Plot -->
   <div class="chart-container">
+    <h2 class="chart-title">Count of Nuclear Explosions Over Time</h2>
     <div id="line_plot"></div>
-    <div class="description-box extra-margin">
-      <p>The first nuclear explosion took place on July 16, 1945, during World War II. In the following decades, nuclear testing surged, particularly at the peak of the Cold War, leading to the creation of multiple treaties designed to curb these tests. Despite these efforts, some nations have resisted full compliance, continuing to pursue nuclear testing in defiance of international agreements. Fortunately, no nuclear tests have been conducted in the past seven years, marking a significant period of restraint.</p>
+    <div class="description-box center-text">
+      <p>The <strong>Comprehensive Nuclear-Test-Ban Treaty (CTBT)</strong> is a multilateral international agreement designed to ban all nuclear explosions for both civilian and military purposes. Its goal is to prevent the further development of nuclear weapons and promote nuclear disarmament, contributing to global peace and security.</p>
     </div>
   </div>
 
   <!-- Pie Chart -->
   <div class="chart-container">
+    <h2 class="chart-title">Proportion of Nuclear Explosions by Method of Deployment</h2>
     <div id="pie_chart"></div>
-    <div class="description-box">
-      <p>ATMOSPH (Atmospheric), UG (underground), BALLOON (Balloon drop), AIRDROP (Airplane deployed), ROCKET (Rocket deployed), TOWER (deployed at the top of a constructed tower), WATERSURFACE (on surface of a body of water), BARGE (on a barge boat), SURFACE (on surface or in a shallow crater), UW (Underwater), SHAFT (Vertical Shaft underground), TUNNEL/GALLERY (Horizontal tunnel)</p>
+    <div class="description-box pie-chart-description-box">
+      <ul>
+        <li><strong>ATMOSPH</strong> (Atmospheric)</li>
+        <li><strong>UG</strong> (Underground)</li>
+        <li><strong>BALLOON</strong> (Balloon drop)</li>
+        <li><strong>AIRDROP</strong> (Airplane deployed)</li>
+        <li><strong>ROCKET</strong> (Rocket deployed)</li>
+        <li><strong>TOWER</strong> (Deployed at the top of a constructed tower)</li>
+        <li><strong>WATERSURFACE</strong> (On the surface of a body of water)</li>
+        <li><strong>BARGE</strong> (On a barge boat)</li>
+        <li><strong>SURFACE</strong> (On surface or in a shallow crater)</li>
+        <li><strong>UW</strong> (Underwater)</li>
+        <li><strong>SHAFT</strong> (Vertical shaft underground)</li>
+        <li><strong>TUNNEL/GALLERY</strong> (Horizontal tunnel)</li>
+      </ul>
     </div>
   </div>
 
-  <!-- Stacked Bar Chart (left-aligned, text box centered) -->
+  <!-- Stacked Bar Chart -->
   <div class="chart-container">
+    <h2 class="chart-title">Nuclear Explosions by Purpose</h2>
     <div id="stacked_bar_chart"></div>
-    <div class="description-box center-text">
-      <p> COMBAT (WWII bombs dropped over Japan), FMS (Soviet test, study phenomenon of nuclear explosion), ME (Military Exercise), PNE (Peaceful nuclear explosion), SAM (Soviet test, accidental mode/emergency), SSE (French/US tests - testing safety of nuclear weapons in case of accident), TRANSP (Transportation-storage purposes), WE (British, French, US, evaluate effects of nuclear detonation on various targets), WR (Weapons development program)</p>
+    <div class="description-box pie-chart-description-box">
+      <ul>
+        <li><strong>COMBAT</strong> (WWII bombs dropped over Japan)</li>
+        <li><strong>FMS</strong> (Soviet test, study phenomenon of nuclear explosion)</li>
+        <li><strong>ME</strong> (Military Exercise)</li>
+        <li><strong>PNE</strong> (Peaceful nuclear explosion)</li>
+        <li><strong>SAM</strong> (Soviet test, accidental mode/emergency)</li>
+        <li><strong>SSE</strong> (French/US tests - testing safety of nuclear weapons in case of accident)</li>
+        <li><strong>TRANSP</strong> (Transportation-storage purposes)</li>
+        <li><strong>WE</strong> (British, French, US, evaluate effects of nuclear detonation on various targets)</li>
+        <li><strong>WR</strong> (Weapons development program)</li>
+      </ul>
     </div>
   </div>
 
-  <!-- Scatter Plot (left-aligned, text box centered) -->
+  <!-- Scatter Plot -->
   <div class="chart-container">
+    <h2 class="chart-title">Maximum Yield of Nuclear Explosions Against Year</h2>
     <div id="scatter_plot"></div>
     <div class="description-box center-text">
-      <p>Maximum yield refers to the highest amount of energy released during a nuclear explosion, typically measured in kilotons (kt) or megatons (Mt) of TNT equivalent. It indicates the explosive power of the nuclear device, where a higher yield means a more powerful explosion.</p>
+      <p><strong>Maximum yield</strong> refers to the highest amount of energy released during a nuclear explosion, typically measured in kilotons (kt) or megatons (Mt) of TNT equivalent. It indicates the <strong>explosive power</strong> of the nuclear device, where a higher yield means a more powerful explosion.</p>
     </div>
   </div>
 
-  <!-- Centered Image and Text -->
-  <div class="image-container">
-    <img src="https://raw.githubusercontent.com/gman0028/FIT3179-DataVis2/refs/heads/main/21trinity-fallout-promo-mediumSquareAt3X.jpg" alt="Descriptive Image">
-    <div class="description-box center-text">
-      <p>Trinity, the explosion that altered the course of history...</p>
-    </div>
-  </div>
+  <!-- Metadata Footer -->
+  <footer>
+    <p>Created and designed by Gireshjeet Singh Mann. The data used for this visualization is sourced from <a href="https://github.com/SweetEyesBirb/Nuclear-Test-Sites-Map">GitHub</a> and <a href="https://corgis-edu.github.io/corgis/json/nuclear_explosions/">CORGIS Dataset Project</a>.</p>
+  </footer>
 
   <!-- JavaScript to embed the visualizations -->
   <script type="text/javascript">
-    vegaEmbed('#symbol_map', "https://raw.githubusercontent.com/gman0028/FIT3179-DataVis2/refs/heads/main/map.vg.json").then(function(result) {
+    vegaEmbed('#symbol_map', "https://raw.githubusercontent.com/gman0028/FIT3179-DataVis2/refs/heads/main/map.vg.json").then(function (result) {
       // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
     }).catch(console.error);
 
-    vegaEmbed('#line_plot', "https://raw.githubusercontent.com/gman0028/FIT3179-DataVis2/refs/heads/main/lineplot.vg.json").then(function(result) {
+    vegaEmbed('#line_plot', "https://raw.githubusercontent.com/gman0028/FIT3179-DataVis2/refs/heads/main/lineplot.vg.json").then(function (result) {
       // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
     }).catch(console.error);
 
-    vegaEmbed('#pie_chart', "https://raw.githubusercontent.com/gman0028/FIT3179-DataVis2/refs/heads/main/piechart.vg.json").then(function(result) {
+    vegaEmbed('#pie_chart', "https://raw.githubusercontent.com/gman0028/FIT3179-DataVis2/refs/heads/main/piechart.vg.json").then(function (result) {
       // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
     }).catch(console.error);
 
-    vegaEmbed('#stacked_bar_chart', "https://raw.githubusercontent.com/gman0028/FIT3179-DataVis2/refs/heads/main/stackedbarchart.vg.json").then(function(result) {
+    vegaEmbed('#stacked_bar_chart', "https://raw.githubusercontent.com/gman0028/FIT3179-DataVis2/refs/heads/main/stackedbarchart.vg.json").then(function (result) {
       // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
     }).catch(console.error);
 
-    vegaEmbed('#scatter_plot', "https://raw.githubusercontent.com/gman0028/FIT3179-DataVis2/refs/heads/main/scatterplot.vg.json").then(function(result) {
+    vegaEmbed('#scatter_plot', "https://raw.githubusercontent.com/gman0028/FIT3179-DataVis2/refs/heads/main/scatterplot.vg.json").then(function (result) {
       // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
     }).catch(console.error);
   </script>
 
 </body>
+
 </html>
