@@ -4,6 +4,19 @@
   "height": 500,
   "title": "Locations of Nuclear Explosions",
   "projection": {"type": "equalEarth"},
+  "params": [
+    {
+      "name": "Magnitude_filter",
+      "value": 8,
+      "bind": {
+        "input": "range",
+        "min": 0,
+        "max": 8,
+        "step": 0.1,
+        "name": "Filter by Magnitude (Body): "
+      }
+    }
+  ],
   "layer": [
     {
       "data": {
@@ -31,9 +44,14 @@
         "url": "https://raw.githubusercontent.com/gman0028/FIT3179-DataVis2/refs/heads/main/nuclear_explosions_updated.csv",
         "format": {"type": "csv"}
       },
+      "transform": [
+        {
+          "filter": "datum['Magnitude/Body'] <= Magnitude_filter"
+        }
+      ],
       "mark": {
         "type": "circle",
-        "stroke": "black",  
+        "stroke": "black",
         "strokeWidth": 0.8,
         "tooltip": {"content": "data"}
       },
@@ -44,13 +62,13 @@
           "field": "Magnitude/Body",
           "type": "quantitative",
           "scale": {
-            "domain": [0, 10],  
-            "range": [50, 500]  
+            "domain": [0, 8],
+            "range": [50, 500]
           },
           "title": "Magnitude (Body)"
         },
         "color": {
-          "field": "Country", 
+          "field": "Country",
           "type": "nominal",
           "legend": {"title": "Country"},
           "scale": {
@@ -65,14 +83,14 @@
               "NORTH KOREA"
             ],
             "range": [
-              "#e41a1c",  
-              "#984ea3",  
-              "#ff7f00",  
-              "#a6cee3",  
-              "#377eb8",  
-              "#a65628",  
-              "#97d8c4",  
-              "#cc7987"   
+              "#e41a1c",
+              "#984ea3",
+              "#ff7f00",
+              "#a6cee3",
+              "#377eb8",
+              "#a65628",
+              "#97d8c4",
+              "#cc7987"
             ]
           }
         },
