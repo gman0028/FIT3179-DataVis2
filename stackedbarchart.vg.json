@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 1000,
-  "height": 500,
+  "height": 800,
   "title": "Nuclear Explosions by Purpose",
   "data": {
     "url": "https://raw.githubusercontent.com/gman0028/FIT3179-DataVis2/refs/heads/main/nuclear_explosions_updated.csv"
